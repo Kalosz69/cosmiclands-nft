@@ -1,0 +1,6 @@
+.env*
+build/
+nft-metadata/
+node_modules/
+test-output/
+mars-manifest.json

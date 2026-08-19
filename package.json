@@ -1,0 +1,26 @@
+{
+  "name": "cosmic-lands-nft",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Cosmic Lands NFT deed + COSMO on Base L2 + certyfikaty PDF",
+  "scripts": {
+    "compile": "node scripts/compile.mjs",
+    "deploy:nft": "node scripts/deploy-nft.mjs",
+    "deploy:cosmo": "node scripts/deploy-cosmo.mjs",
+    "mint:test": "node scripts/mint-test.mjs",
+    "cert:test": "node scripts/generate-certificate.mjs",
+    "webhook:test": "node tests/test-webhook-hmac.mjs",
+    "test:all": "node tests/run-tests.mjs"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.2.0",
+    "ethers": "^6.17.0",
+    "pdf-lib": "^1.17.1",
+    "solc": "^0.8.29"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-ethers": "^4.0.15",
+    "hardhat": "^3.13.0"
+  }
+}
