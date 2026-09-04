@@ -18,6 +18,7 @@ const NETWORKS = {
 };
 const network = process.env.NETWORK || 'base-sepolia';
 const cfg = NETWORKS[network];
+if (cfg.chainId !== 84532) throw new Error('CHAINID_GUARD: dozwolona WYŁĄCZNIE Base Sepolia (84532) — testy. Mainnet zablokowany.');
 if (!cfg) throw new Error(`Nieznana sieć: ${network}`);
 
 const provider = new ethers.JsonRpcProvider(cfg.rpc);

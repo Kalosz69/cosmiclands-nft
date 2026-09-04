@@ -82,6 +82,28 @@ await (await deed.mintDeed(buyer.address, 'MARS-PLOT-000001', 'ipfs://com/1')).w
 await (await deed.connect(buyer).transferFrom(buyer.address, owner.address, 2)).wait();
 check('T10c komercyjny transfer od razu OK', (await deed.ownerOf(2)) === owner.address);
 
+// ---- T9d: batch mint rezerwatu — cała planeta w 1 tx ----
+const batchUnlock = now + 18000;
+const batchIds = ['MARS-RES-1001', 'MARS-RES-1002', 'MARS-RES-1003'];
+const batchUris = ['ipfs://res/1001', 'ipfs://res/1002', 'ipfs://res/1003'];
+const batchTx = await deed.mintReserveBatch(await vault.getAddress(), batchIds, batchUris, batchUnlock);
+const batchReceipt = await batchTx.wait();
+const ids = [];
+for (const log of batchReceipt.logs) {
+  try {
+    const parsed = deed.interface.parseLog(log);
+    if (parsed?.name === 'ReserveDeedMinted') ids.push(parsed.args[0]);
+  } catch {}
+}
+check('T9d batch: 3 działki w 1 tx', ids.length === 3, `tokenId: ${ids.map(String).join(',')}`);
+check('T9d batch: wszystkie locked', (await deed.lockedUntil(ids[0])) === BigInt(batchUnlock) && (await deed.lockedUntil(ids[2])) === BigInt(batchUnlock));
+check('T9d batch: w vault (bank)', (await deed.ownerOf(ids[0])) === await vault.getAddress());
+reverted = false;
+try {
+  await (await vault.withdrawDeed(owner.address, ids[0])).wait(); // przed unlockTime vaulta — musi REVERT
+} catch (e) { reverted = /vault locked/.test(e.message || ''); }
+check('T9d batch: withdraw z vaulta przed czasem REVERT', reverted);
+
 // ---- T10a: vault — deposit COSMO OK, withdraw przed czasem REVERT ----
 await (await cosmo.mint(buyer.address, ethers.parseEther('1000'))).wait();
 await (await cosmo.connect(buyer).approve(await vault.getAddress(), ethers.parseEther('1000'))).wait();

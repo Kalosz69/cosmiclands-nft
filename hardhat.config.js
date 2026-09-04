@@ -10,6 +10,7 @@ export default {
       type: 'edr-simulated',
       hardfork: 'cancun',
       chainId: 84532,
+      gasLimit: 1600000000, // podniesione tymczasowo: benchmarki batcha (Sepolia ma 1,2 mld)
     },
   },
   mocha: { timeout: 60000 },

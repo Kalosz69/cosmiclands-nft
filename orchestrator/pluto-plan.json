@@ -1,0 +1,132 @@
+[
+  {
+    "region": "R01",
+    "region_name": "Sputnik",
+    "handle": "pluto-plot-000001",
+    "sku": "PLUTO-PLOT-000001",
+    "class": "S",
+    "price": 50,
+    "cosmo": 100,
+    "variant_id": "54526787846485"
+  },
+  {
+    "region": "R02",
+    "region_name": "Tombaugh",
+    "handle": "pluto-plot-000863",
+    "sku": "PLUTO-PLOT-000863",
+    "class": "M",
+    "price": 129,
+    "cosmo": 300,
+    "variant_id": "54526796267861"
+  },
+  {
+    "region": "R03",
+    "region_name": "Lowell",
+    "handle": "pluto-plot-001664",
+    "sku": "PLUTO-PLOT-001664",
+    "class": "L",
+    "price": 369,
+    "cosmo": 900,
+    "variant_id": "54526804099413"
+  },
+  {
+    "region": "R04",
+    "region_name": "Arrakis",
+    "handle": "pluto-plot-002403",
+    "sku": "PLUTO-PLOT-002403",
+    "class": "XL",
+    "price": 999,
+    "cosmo": 2700,
+    "variant_id": "54526811930965"
+  },
+  {
+    "region": "R05",
+    "region_name": "Cthulhu",
+    "handle": "pluto-plot-002465",
+    "sku": "PLUTO-PLOT-002465",
+    "class": "S",
+    "price": 50,
+    "cosmo": 100,
+    "variant_id": "54526813733205"
+  },
+  {
+    "region": "R06",
+    "region_name": "Puzzling",
+    "handle": "pluto-plot-003327",
+    "sku": "PLUTO-PLOT-003327",
+    "class": "M",
+    "price": 129,
+    "cosmo": 300,
+    "variant_id": "54526821630293"
+  },
+  {
+    "region": "R07",
+    "region_name": "Viking",
+    "handle": "pluto-plot-004127",
+    "sku": "PLUTO-PLOT-004127",
+    "class": "L",
+    "price": 369,
+    "cosmo": 900,
+    "variant_id": "54526828282197"
+  },
+  {
+    "region": "R08",
+    "region_name": "Tenzing",
+    "handle": "pluto-plot-004865",
+    "sku": "PLUTO-PLOT-004865",
+    "class": "XL",
+    "price": 999,
+    "cosmo": 2700,
+    "variant_id": "54526836113749"
+  },
+  {
+    "region": "R09",
+    "region_name": "Hillary",
+    "handle": "pluto-plot-004926",
+    "sku": "PLUTO-PLOT-004926",
+    "class": "S",
+    "price": 50,
+    "cosmo": 100,
+    "variant_id": "54526837326165"
+  },
+  {
+    "region": "R10",
+    "region_name": "Norgay",
+    "handle": "pluto-plot-005787",
+    "sku": "PLUTO-PLOT-005787",
+    "class": "M",
+    "price": 129,
+    "cosmo": 300,
+    "variant_id": "54526845223253"
+  },
+  {
+    "region": "R11",
+    "region_name": "Sleipnir",
+    "handle": "pluto-plot-006587",
+    "sku": "PLUTO-PLOT-006587",
+    "class": "L",
+    "price": 369,
+    "cosmo": 900,
+    "variant_id": "54526852464981"
+  },
+  {
+    "region": "R12",
+    "region_name": "Meng-Po",
+    "handle": "pluto-plot-007325",
+    "sku": "PLUTO-PLOT-007325",
+    "class": "XL",
+    "price": 999,
+    "cosmo": 2700,
+    "variant_id": "54526859739477"
+  },
+  {
+    "region": "R13",
+    "region_name": "Veles",
+    "handle": "pluto-plot-007386",
+    "sku": "PLUTO-PLOT-007386",
+    "class": "S",
+    "price": 50,
+    "cosmo": 100,
+    "variant_id": "54526861541717"
+  }
+]

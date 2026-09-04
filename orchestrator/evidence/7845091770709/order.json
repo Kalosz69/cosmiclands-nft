@@ -1,0 +1,441 @@
+{
+  "id": 7845091770709,
+  "admin_graphql_api_id": "gid://shopify/Order/7845091770709",
+  "app_id": 580111,
+  "browser_ip": "80.233.40.103",
+  "buyer_accepts_marketing": false,
+  "cancel_reason": null,
+  "cancelled_at": null,
+  "cart_token": "hWNGJb2evqFLnUU8ie15FVz9",
+  "checkout_id": 50755735454037,
+  "checkout_token": "32d8b03a4ac92ebb42262e369081fc34",
+  "client_details": {
+    "accept_language": "en-IE",
+    "browser_height": null,
+    "browser_ip": "80.233.40.103",
+    "browser_width": null,
+    "session_hash": null,
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36"
+  },
+  "closed_at": "2026-09-01T06:04:49+02:00",
+  "company": null,
+  "confirmation_number": "U83ZTC2W4",
+  "confirmed": true,
+  "contact_email": "KALOSORAMA@GMAIL.COM",
+  "created_at": "2026-09-01T06:04:47+02:00",
+  "currency": "EUR",
+  "current_subtotal_price": "129.00",
+  "current_subtotal_price_set": {
+    "shop_money": {
+      "amount": "129.00",
+      "currency_code": "EUR"
+    },
+    "presentment_money": {
+      "amount": "129.00",
+      "currency_code": "EUR"
+    }
+  },
+  "current_total_additional_fees_set": null,
+  "current_total_discounts": "0.00",
+  "current_total_discounts_set": {
+    "shop_money": {
+      "amount": "0.00",
+      "currency_code": "EUR"
+    },
+    "presentment_money": {
+      "amount": "0.00",
+      "currency_code": "EUR"
+    }
+  },
+  "current_total_duties_set": null,
+  "current_total_price": "129.00",
+  "current_total_price_set": {
+    "shop_money": {
+      "amount": "129.00",
+      "currency_code": "EUR"
+    },
+    "presentment_money": {
+      "amount": "129.00",
+      "currency_code": "EUR"
+    }
+  },
+  "current_total_tax": "0.00",
+  "current_total_tax_set": {
+    "shop_money": {
+      "amount": "0.00",
+      "currency_code": "EUR"
+    },
+    "presentment_money": {
+      "amount": "0.00",
+      "currency_code": "EUR"
+    }
+  },
+  "customer_locale": "en-IE",
+  "device_id": null,
+  "discount_codes": [],
+  "duties_included": false,
+  "email": "KALOSORAMA@GMAIL.COM",
+  "estimated_taxes": false,
+  "financial_status": "paid",
+  "fulfillment_status": "fulfilled",
+  "landing_site": "/",
+  "landing_site_ref": null,
+  "location_id": null,
+  "merchant_business_entity_id": "26167312725",
+  "merchant_of_record_app_id": null,
+  "name": "#1020",
+  "note": null,
+  "note_attributes": [],
+  "number": 20,
+  "order_number": 1020,
+  "order_status_url": "https://cosmiclands.space/104273674581/orders/89e0654c92607ccdb609d8c9c89bf248/authenticate?key=0e49b8434d14ce50bd0c2cefb5b5054f",
+  "original_total_additional_fees_set": null,
+  "original_total_duties_set": null,
+  "payment_gateway_names": [
+    "shopify_payments"
+  ],
+  "phone": null,
+  "po_number": null,
+  "presentment_currency": "EUR",
+  "processed_at": "2026-09-01T06:04:44+02:00",
+  "reference": null,
+  "referring_site": "https://admin.shopify.com/",
+  "source_identifier": null,
+  "source_name": "web",
+  "source_url": null,
+  "subtotal_price": "129.00",
+  "subtotal_price_set": {
+    "shop_money": {
+      "amount": "129.00",
+      "currency_code": "EUR"
+    },
+    "presentment_money": {
+      "amount": "129.00",
+      "currency_code": "EUR"
+    }
+  },
+  "tags": "",
+  "tax_exempt": false,
+  "tax_lines": [],
+  "taxes_included": true,
+  "test": true,
+  "token": "89e0654c92607ccdb609d8c9c89bf248",
+  "total_cash_rounding_payment_adjustment_set": {
+    "shop_money": {
+      "amount": "0.00",
+      "currency_code": "EUR"
+    },
+    "presentment_money": {
+      "amount": "0.00",
+      "currency_code": "EUR"
+    }
+  },
+  "total_cash_rounding_refund_adjustment_set": {
+    "shop_money": {
+      "amount": "0.00",
+      "currency_code": "EUR"
+    },
+    "presentment_money": {
+      "amount": "0.00",
+      "currency_code": "EUR"
+    }
+  },
+  "total_discounts": "0.00",
+  "total_discounts_set": {
+    "shop_money": {
+      "amount": "0.00",
+      "currency_code": "EUR"
+    },
+    "presentment_money": {
+      "amount": "0.00",
+      "currency_code": "EUR"
+    }
+  },
+  "total_line_items_price": "129.00",
+  "total_line_items_price_set": {
+    "shop_money": {
+      "amount": "129.00",
+      "currency_code": "EUR"
+    },
+    "presentment_money": {
+      "amount": "129.00",
+      "currency_code": "EUR"
+    }
+  },
+  "total_outstanding": "0.00",
+  "total_price": "129.00",
+  "total_price_set": {
+    "shop_money": {
+      "amount": "129.00",
+      "currency_code": "EUR"
+    },
+    "presentment_money": {
+      "amount": "129.00",
+      "currency_code": "EUR"
+    }
+  },
+  "total_shipping_price_set": {
+    "shop_money": {
+      "amount": "0.00",
+      "currency_code": "EUR"
+    },
+    "presentment_money": {
+      "amount": "0.00",
+      "currency_code": "EUR"
+    }
+  },
+  "total_tax": "0.00",
+  "total_tax_set": {
+    "shop_money": {
+      "amount": "0.00",
+      "currency_code": "EUR"
+    },
+    "presentment_money": {
+      "amount": "0.00",
+      "currency_code": "EUR"
+    }
+  },
+  "total_tip_received": "0.00",
+  "total_weight": 0,
+  "updated_at": "2026-09-01T06:04:49+02:00",
+  "user_id": null,
+  "billing_address": {
+    "first_name": "Jarek",
+    "address1": "11 Maplewood Dr",
+    "phone": null,
+    "city": "TALLAGHT",
+    "zip": "D24 KF79",
+    "province": "Dublin",
+    "country": "Ireland",
+    "last_name": "Galosz",
+    "address2": null,
+    "company": null,
+    "latitude": 53.2845092,
+    "longitude": -6.384303999999999,
+    "name": "Jarek Galosz",
+    "country_code": "IE",
+    "province_code": "D"
+  },
+  "customer": {
+    "id": 10459553169749,
+    "created_at": "2026-04-17T07:34:33+02:00",
+    "updated_at": "2026-09-01T06:04:48+02:00",
+    "first_name": "TEST",
+    "last_name": "USER",
+    "state": "disabled",
+    "note": null,
+    "verified_email": true,
+    "multipass_identifier": null,
+    "tax_exempt": false,
+    "email_marketing_consent": {
+      "state": "not_subscribed",
+      "opt_in_level": "single_opt_in",
+      "consent_updated_at": null
+    },
+    "sms_marketing_consent": null,
+    "tags": "Login with Shop, Shop",
+    "email": "KALOSORAMA@GMAIL.COM",
+    "phone": null,
+    "currency": "EUR",
+    "tax_exemptions": [],
+    "admin_graphql_api_id": "gid://shopify/Customer/10459553169749",
+    "default_address": {
+      "id": 12409017008469,
+      "customer_id": 10459553169749,
+      "first_name": "Jarek",
+      "last_name": "Galosz",
+      "company": null,
+      "address1": "11 Maplewood Dr",
+      "address2": null,
+      "city": "TALLAGHT",
+      "province": "Dublin",
+      "country": "Ireland",
+      "zip": "D24 KF79",
+      "phone": null,
+      "name": "Jarek Galosz",
+      "province_code": "D",
+      "country_code": "IE",
+      "country_name": "Ireland",
+      "default": true
+    }
+  },
+  "discount_applications": [],
+  "fulfillments": [
+    {
+      "id": 7152617718101,
+      "admin_graphql_api_id": "gid://shopify/Fulfillment/7152617718101",
+      "created_at": "2026-09-01T06:04:48+02:00",
+      "location_id": 118795174229,
+      "name": "#1020.1",
+      "order_id": 7845091770709,
+      "origin_address": {},
+      "receipt": {},
+      "service": "manual",
+      "shipment_status": null,
+      "status": "success",
+      "tracking_company": null,
+      "tracking_number": null,
+      "tracking_numbers": [],
+      "tracking_url": null,
+      "tracking_urls": [],
+      "updated_at": "2026-09-01T06:04:48+02:00",
+      "line_items": [
+        {
+          "id": 19030185050453,
+          "admin_graphql_api_id": "gid://shopify/LineItem/19030185050453",
+          "attributed_staffs": [],
+          "current_quantity": 1,
+          "fulfillable_quantity": 0,
+          "fulfillment_service": "manual",
+          "fulfillment_status": "fulfilled",
+          "gift_card": false,
+          "grams": 0,
+          "name": "Mars Plot #003327 – Class M, Tharsis/Marineris",
+          "price": "129.00",
+          "price_set": {
+            "shop_money": {
+              "amount": "129.00",
+              "currency_code": "EUR"
+            },
+            "presentment_money": {
+              "amount": "129.00",
+              "currency_code": "EUR"
+            }
+          },
+          "product_exists": true,
+          "product_id": 11521808269653,
+          "properties": [],
+          "quantity": 1,
+          "requires_shipping": true,
+          "sku": "MARS-PLOT-003327",
+          "taxable": true,
+          "title": "Mars Plot #003327 – Class M, Tharsis/Marineris",
+          "total_discount": "0.00",
+          "total_discount_set": {
+            "shop_money": {
+              "amount": "0.00",
+              "currency_code": "EUR"
+            },
+            "presentment_money": {
+              "amount": "0.00",
+              "currency_code": "EUR"
+            }
+          },
+          "variant_id": 54708364968277,
+          "variant_inventory_management": "shopify",
+          "variant_title": null,
+          "vendor": "Cosmic Lands",
+          "tax_lines": [],
+          "duties": [],
+          "discount_allocations": []
+        }
+      ]
+    }
+  ],
+  "line_items": [
+    {
+      "id": 19030185050453,
+      "admin_graphql_api_id": "gid://shopify/LineItem/19030185050453",
+      "attributed_staffs": [],
+      "current_quantity": 1,
+      "fulfillable_quantity": 0,
+      "fulfillment_service": "manual",
+      "fulfillment_status": "fulfilled",
+      "gift_card": false,
+      "grams": 0,
+      "name": "Mars Plot #003327 – Class M, Tharsis/Marineris",
+      "price": "129.00",
+      "price_set": {
+        "shop_money": {
+          "amount": "129.00",
+          "currency_code": "EUR"
+        },
+        "presentment_money": {
+          "amount": "129.00",
+          "currency_code": "EUR"
+        }
+      },
+      "product_exists": true,
+      "product_id": 11521808269653,
+      "properties": [],
+      "quantity": 1,
+      "requires_shipping": true,
+      "sku": "MARS-PLOT-003327",
+      "taxable": true,
+      "title": "Mars Plot #003327 – Class M, Tharsis/Marineris",
+      "total_discount": "0.00",
+      "total_discount_set": {
+        "shop_money": {
+          "amount": "0.00",
+          "currency_code": "EUR"
+        },
+        "presentment_money": {
+          "amount": "0.00",
+          "currency_code": "EUR"
+        }
+      },
+      "variant_id": 54708364968277,
+      "variant_inventory_management": "shopify",
+      "variant_title": null,
+      "vendor": "Cosmic Lands",
+      "tax_lines": [],
+      "duties": [],
+      "discount_allocations": []
+    }
+  ],
+  "payment_terms": null,
+  "refunds": [],
+  "shipping_address": {
+    "first_name": "Jarek",
+    "address1": "11 Maplewood Dr",
+    "phone": null,
+    "city": "TALLAGHT",
+    "zip": "D24 KF79",
+    "province": "Dublin",
+    "country": "Ireland",
+    "last_name": "Galosz",
+    "address2": null,
+    "company": null,
+    "latitude": 53.2845092,
+    "longitude": -6.384303999999999,
+    "name": "Jarek Galosz",
+    "country_code": "IE",
+    "province_code": "D"
+  },
+  "shipping_lines": [
+    {
+      "id": 6462102798677,
+      "carrier_identifier": null,
+      "code": "Standard",
+      "discounted_price": "0.00",
+      "discounted_price_set": {
+        "shop_money": {
+          "amount": "0.00",
+          "currency_code": "EUR"
+        },
+        "presentment_money": {
+          "amount": "0.00",
+          "currency_code": "EUR"
+        }
+      },
+      "is_removed": false,
+      "phone": null,
+      "price": "0.00",
+      "price_set": {
+        "shop_money": {
+          "amount": "0.00",
+          "currency_code": "EUR"
+        },
+        "presentment_money": {
+          "amount": "0.00",
+          "currency_code": "EUR"
+        }
+      },
+      "requested_fulfillment_service_id": null,
+      "source": "shopify",
+      "title": "Standard",
+      "tax_lines": [],
+      "discount_allocations": []
+    }
+  ]
+}

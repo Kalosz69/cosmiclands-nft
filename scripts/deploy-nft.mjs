@@ -26,7 +26,8 @@ if (!process.env.PRIVATE_KEY) throw new Error('Brak PRIVATE_KEY w env');
 
 const provider = new ethers.JsonRpcProvider(cfg.rpc);
 const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
-const artifact = JSON.parse(fs.readFileSync(path.join(__dirname, '../build/CosmicLandsDeed.json'), 'utf8'));
+const artifactName = process.env.ARTIFACT || 'CosmicLandsDeed.json';
+const artifact = JSON.parse(fs.readFileSync(path.join(__dirname, `../build/${artifactName}`), 'utf8'));
 
 // Parametry: baseURI (przyszłe miejsce metadata) + maxSupply (10 000)
 const baseURI = process.env.NFT_BASE_URI || 'ipfs://';

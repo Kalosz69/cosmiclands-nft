@@ -27,6 +27,8 @@ const area = getArg('--area', '13.5 ha');
 const price = getArg('--price', '999 EUR');
 const coords = getArg('--coords', '76.5, -36.5');
 const certNo = getArg('--cert', `COSMO-2026-${String(100000 + Math.floor(Math.random() * 90000))}`);
+const tokenId = getArg('--token-id', '');   // cross-ref: numer NFT na certyfikacie (v3 testy 27.08)
+const txHash = getArg('--tx', '');           // opcjonalnie: tx mintu na eksploratorze
 
 const pdf = await PDFDocument.create();
 const page = pdf.addPage([595.28, 841.89]); // A4 portrait
@@ -82,6 +84,14 @@ for (const [k, v] of rows) {
 
 y -= 18;
 centerText('Certificate number: ' + certNo, 10, fontN, grey, 0);
+if (tokenId) {
+  y -= 16;
+  centerText(`NFT Deed tokenId: ${tokenId} (Base Sepolia 84532)`, 10, fontB, gold, 0);
+}
+if (txHash) {
+  y -= 14;
+  centerText(`Mint tx: ${txHash.slice(0, 20)}…${txHash.slice(-8)}`, 8, fontN, grey, 0);
+}
 y -= 60;
 // ramka QR placeholder
 page.drawRectangle({ x: 90, y: 120, width: 70, height: 70, borderColor: gold, borderWidth: 1, color: navy });

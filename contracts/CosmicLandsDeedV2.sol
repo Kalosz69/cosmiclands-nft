@@ -102,6 +102,39 @@ contract CosmicLandsDeedV2 is ERC721, ERC721URIStorage, Ownable {
     }
 
     /**
+     * Batch mint rezerwatu — cała planeta (2000 działek) w JEDNEJ transakcji.
+     * Wymagane dla "wszystkie minty naraz + depozyt w banku" (K 19.08):
+     * 16 000 pojedynczych tx = niepotrzebny koszt; batch = 1 tx na planetę.
+     * Unlock timestamp wspólny dla całej planety (jedno okno odblokowania).
+     * Wszystkie działki mintowane na adres banku (vault) — owner tylko pośredniczy.
+     */
+    function mintReserveBatch(
+        address to,
+        string[] calldata plotIds,
+        string[] calldata tokenUris,
+        uint256 unlockTimestamp
+    ) external onlyOwner returns (uint256[] memory tokenIds) {
+        require(plotIds.length == tokenUris.length, "length mismatch");
+        require(unlockTimestamp > block.timestamp, "unlock must be in future");
+        tokenIds = new uint256[](plotIds.length);
+        for (uint256 i = 0; i < plotIds.length; i++) {
+            require(maxSupply == 0 || totalMinted < maxSupply, "max supply reached");
+            require(plotToToken[plotIds[i]] == 0 || !exists(plotToToken[plotIds[i]]), "plot already minted");
+            totalMinted++;
+            uint256 tokenId = totalMinted;
+            plotToToken[plotIds[i]] = tokenId;
+            tokenPlot[tokenId] = plotIds[i];
+            unlockAt[tokenId] = unlockTimestamp;
+            _safeMint(to, tokenId);
+            if (bytes(tokenUris[i]).length > 7) {
+                _setTokenURI(tokenId, tokenUris[i]);
+            }
+            emit ReserveDeedMinted(tokenId, plotIds[i], to, unlockTimestamp);
+            tokenIds[i] = tokenId;
+        }
+    }
+
+    /**
      * Wydłużenie blokady (np. governance decyduje o przesunięciu odblokowania).
      * TYLKO wydłużenie — skrócenie niemożliwe: banku nie da się ruszyć wcześniej.
      */

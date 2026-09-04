@@ -41,7 +41,16 @@ for (const p of slice) {
       { trait_type: 'Plot', value: p.plot_number ?? p.plot_id },
       { trait_type: 'COSMO Bonus', value: String(cosmo ?? 0) },
       { trait_type: 'Owner', value: p.owner_name || 'TBD' },
+      { trait_type: 'Certificate Number', value: p.certificate_number || 'TBD' },
+      { trait_type: 'Coordinates', value: `${p.mf_coordinates_lat ?? p.lat ?? ''}, ${p.mf_coordinates_lon ?? p.lon ?? ''}` },
+      { trait_type: 'Area', value: `${area ?? ''} ha` },
+      { trait_type: 'Price EUR', value: String(p.mf_price_eur ?? p.price ?? '') },
     ],
+    // cross-reference (v3 testy 27.08): NFT wskazuje certyfikat, certyfikat wskazuje tokenId
+    token_id: p.token_id || null,
+    owner_name: p.owner_name || null,
+    owner_address: p.owner_address || null,
+    certificate_number: p.certificate_number || null,
     // dodatkowe (off-chain, dla /verify)
     registry: 'Cosmic Lands Planetary Registry',
     issued_by: 'Rainbow Universe Operating System',

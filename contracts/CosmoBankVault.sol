@@ -3,6 +3,7 @@ pragma solidity ^0.8.24;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 /**
@@ -17,10 +18,12 @@ import "@openzeppelin/contracts/access/Ownable.sol";
  *      Deploy: po tokenomice v2 — pula Bank+Liquidity 9 280 000 (rezerwat)
  *      + nadwyżka elastyczna 4 083 200 (K 18.08).
  */
-contract CosmoBankVault is Ownable {
+contract CosmoBankVault is Ownable, IERC721Receiver {
     IERC20 public immutable cosmo;
     IERC721 public immutable deed;
     uint256 public immutable unlockTime;
+
+    bytes4 private constant _ERC721_RECEIVED = IERC721Receiver.onERC721Received.selector;
 
     event DepositedCosmo(address indexed from, uint256 amount);
     event DepositedDeed(address indexed from, uint256 tokenId);
@@ -78,5 +81,14 @@ contract CosmoBankVault is Ownable {
 
     function lockedFor() external view returns (uint256) {
         return unlockTime > block.timestamp ? unlockTime - block.timestamp : 0;
+    }
+
+    /**
+     * Bank przyjmuje NFT (safe mint/deposit rezerwatu prosto na vault).
+     * Zwraca selector, akceptując każdy deed — blokady pilnuje sam kontrakt
+     * deed (transfer przed unlockAt REVERTuje) oraz onlyAfterUnlock przy wypłatach.
+     */
+    function onERC721Received(address, address, uint256, bytes calldata) external pure returns (bytes4) {
+        return _ERC721_RECEIVED;
     }
 }

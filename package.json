@@ -16,11 +16,15 @@
   "dependencies": {
     "@openzeppelin/contracts": "^5.2.0",
     "ethers": "^6.17.0",
+    "imapflow": "^1.7.6",
+    "nodemailer": "^9.0.5",
     "pdf-lib": "^1.17.1",
     "solc": "^0.8.29"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-ethers": "^4.0.15",
-    "hardhat": "^3.13.0"
+    "hardhat": "^3.13.0",
+    "jsqr": "^1.4.0",
+    "qrcode": "^1.5.4"
   }
 }

@@ -325,3 +325,12 @@ GET /.health → { ok, sha: version }
 - `compile.mjs` kompiluje 4 kontrakty (V1, V2, COSMO, Vault).
 - `hardhat.config.js` + hardhat (devDependency) tylko do testów runtime (EDR, Cancun; ganache nie wspiera PUSH0/mcopy OZ 5.2).
 - Deploy produkcji: V2 + Vault po akceptacji Kapitana (D1–D7, patrz 13-PROJEKT-WDROZENIOWY).
+
+### Uzupełnienie F1 (decyzje Kapitana 19.08):
+- **`mintReserveBatch(to, plotIds[], tokenUris[], unlockAt)`** — cała planeta (2000 działek) w JEDNEJ transakcji, mint prosto na vault (bank). Wymagane: "wszystkie minty naraz + depozyt w banku".
+- **`CosmoBankVault.onERC721Received`** — vault przyjmuje safe mint/deposit NFT.
+- **Staking = holding-based** (K 19.08): klient trzyma deed WE WŁASNYM portfelu (my nie przechowujemy); staking liczy się od dnia zakupu. `scripts/staking-snapshot.mjs` — codzienny snapshot o 22:00 (ownerOf na łańcuchu), dane: `data/holders.json` → `data/staking-snapshot-YYYY-MM-DD.json`. Test E2E: `tests/test-staking-snapshot.mjs` (PASS).
+- **COSMO klientów** — dystrybucja przy zakupie (od razu), rezerwat+team w banku. Klient może DOŁĄCZYĆ całą kwotę + NFT do vaulta (depositCosmo/depositDeed — otwarte).
+- **Merch redemption** — wymiana COSMO na koszulki/kubki/gadżety (katalog i integracja — F5 projektu).
+- **Papierowe nośniki** — `scripts/generate-paper-backup.mjs` generuje PDF manifestu mintów (dane PUBLICZNE, bez kluczy!) do wydruku i depozytu w banku/bankach. NIGDY nie drukować seed phrase.
+- **Mint bieżący z personalizacją** — imię/nazwisko właściciela w certyfikacie i metadanych (certyfikat PDF ma `--owner`; metadata do rozszerzenia).
