@@ -137,6 +137,21 @@ async function resolveClass(item, orderId) {
   throw new Error(`Nie umiem ustalić klasy dla SKU ${sku} (order ${orderId})`);
 }
 
+// FIX 2026-09-07 (bug K): certyfikat wychodził z „coords —" bo poller hardcodował '—'.
+// Współrzędne działki są w KV (worker /api/map) — fetch per SKU, cache per run.
+async function plotCoords(sku) {
+  try {
+    if (!plotCoords._cache) {
+      const res = await fetch(cfg.worker_url || 'https://cosmiclands-sync.flufy69happy.workers.dev/api/map?light=1');
+      const j = await res.json();
+      plotCoords._cache = new Map((j.plots || []).map(p => [String(p.plot_id || '').toUpperCase(), [p.lat, p.lon]]));
+    }
+    const c = plotCoords._cache.get(String(sku || '').toUpperCase());
+    if (!c || c[0] == null || c[1] == null) return '—';
+    return `${c[0]}, ${c[1]}`;
+  } catch (e) { log('WARN', `plotCoords(${sku}): ${e.message.slice(0, 60)}`); return '—'; }
+}
+
 // ── Wallet resolution (K 01.09 + Shopify spec) ──────────────────────────
 // Puste pole wallet_address → ZAWSZE Cosmic Bank (0xb66A…055A), niezależnie od wallet_mode.
 // 0xD197…E880 (test_wallet) NIE jest już auto-adresem — tylko ręcznie podany w checkoucie ( DIRECT_WALLET).
@@ -248,6 +263,7 @@ async function processOrder(order, state) {
   for (const item of order.line_items) {
     const sku = item.sku;
     const { cls, region } = await resolveClass(item, orderId);
+    const coordsStr = await plotCoords(sku);
     const grant = cfg.cosmo_by_class[cls];
     if (!grant) throw new Error(`Brak grantu dla klasy ${cls} (${sku})`);
     log('INFO', `ITEM ${sku}: class=${cls} grant=${grant} wallet=${wallet} (${mode}) region=${region || '—'}`);
@@ -332,7 +348,7 @@ async function processOrder(order, state) {
       withRetry(() => runScript('generate-certificate-v3.mjs', {},
         ['--planet', sku.split('-')[0].toLowerCase(), '--plot', sku,
          '--owner', cfg.owner_name, '--class', cls, '--region', region || (item.properties?.Region) || '—',
-         '--coords', '—', '--area', cfg.class_meta[cls]?.area || '—',
+         '--coords', coordsStr, '--area', cfg.class_meta[cls]?.area || '—',
          '--price', cfg.class_meta[cls]?.price || '—', '--cosmo', String(grant),
          '--cert', `CL-TEST-${orderId}`, '--token-id', String(tokenId || '0'), '--tx', mintTx,
          '--out', pdfPath], `pdf ${sku}`), 'pdf');
