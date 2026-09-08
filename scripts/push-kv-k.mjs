@@ -1,5 +1,5 @@
 // PUSH-KV LINII K — naprawiony push manifestu do Cloudflare KV (bezpośrednio przez realne CF API).
-// FIX vs push-kv-manifest-480.mjs: PUT /values/{key} zwraca HTTP 200 z PUSTYM body —
+// FIX vs push-kv-manifest-480.mjs (przeniesiony do _STARE-... 08.09): PUT /values/{key} zwraca HTTP 200 z PUSTYM body —
 // stary skrypt robił put.json() → SyntaxError po UDANYM zapisie → read-back nigdy nie biegł.
 // Teraz: sukces = status 200; read-back = jedyne źródło prawdy (długość + statusy).
 // Usage: node push-kv-k.mjs build/kv-manifest-k10.json
