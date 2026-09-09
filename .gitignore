@@ -6,4 +6,5 @@ test-output/
 mars-manifest.json
 orchestrator/evidence/
 orchestrator/state.json
+orchestrator/state.json*
 orchestrator/logs/
