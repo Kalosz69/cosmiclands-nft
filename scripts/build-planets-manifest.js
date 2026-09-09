@@ -23,6 +23,18 @@ const CLS = {
   XL: { area: 13.5, cosmo: 2700, img: '-plot-xl.jpg' },
 };
 const IMG_BASE = 'https://cdn.shopify.com/s/files/1/1042/7367/4581/files/';
+// OBRAZKI kanonu (09.09, K): 32 URL-e z biblioteki Files — zweryfikowane HTTP 200.
+// Użyte zamiast starych '-plot-{s,m,l,xl}.jpg?v=1778230340'. Literówki nazw (Vesnus_L, Neptun_S1) są CELOWE — zgodne z plikami K.
+const IMAGE_URLS = {
+  mars:    { S: 'https://cdn.shopify.com/s/files/1/1042/7367/4581/files/Mars_S.png?v=1788921275', M: 'https://cdn.shopify.com/s/files/1/1042/7367/4581/files/Mars_M.png?v=1788921275', L: 'https://cdn.shopify.com/s/files/1/1042/7367/4581/files/Mars_L.png?v=1788921276', XL: 'https://cdn.shopify.com/s/files/1/1042/7367/4581/files/Mars_XL.png?v=1788921275' },
+  venus:   { S: 'https://cdn.shopify.com/s/files/1/1042/7367/4581/files/Venus_S.png?v=1788920685', M: 'https://cdn.shopify.com/s/files/1/1042/7367/4581/files/Venus_M.png?v=1788920685', L: 'https://cdn.shopify.com/s/files/1/1042/7367/4581/files/Vesnus_L.png?v=1788920685', XL: 'https://cdn.shopify.com/s/files/1/1042/7367/4581/files/Venus_xl.png?v=1788920685' },
+  jupiter: { S: 'https://cdn.shopify.com/s/files/1/1042/7367/4581/files/Jupiter_S.png?v=1788921317', M: 'https://cdn.shopify.com/s/files/1/1042/7367/4581/files/Jupiter_M.png?v=1788921317', L: 'https://cdn.shopify.com/s/files/1/1042/7367/4581/files/Jupiter_L.png?v=1788921317', XL: 'https://cdn.shopify.com/s/files/1/1042/7367/4581/files/Jupiter_XL.png?v=1788921316' },
+  saturn:  { S: 'https://cdn.shopify.com/s/files/1/1042/7367/4581/files/SaturnS.png?v=1788921039', M: 'https://cdn.shopify.com/s/files/1/1042/7367/4581/files/SaturnM.png?v=1788921040', L: 'https://cdn.shopify.com/s/files/1/1042/7367/4581/files/SaturnL.png?v=1788921040', XL: 'https://cdn.shopify.com/s/files/1/1042/7367/4581/files/SaturnXL.png?v=1788921040' },
+  neptune: { S: 'https://cdn.shopify.com/s/files/1/1042/7367/4581/files/Neptun_S1.png?v=1788921206', M: 'https://cdn.shopify.com/s/files/1/1042/7367/4581/files/Neptun_M.png?v=1788921206', L: 'https://cdn.shopify.com/s/files/1/1042/7367/4581/files/Neptun_L.png?v=1788921206', XL: 'https://cdn.shopify.com/s/files/1/1042/7367/4581/files/Neptun_XL.png?v=1788921206' },
+  mercury: { S: 'https://cdn.shopify.com/s/files/1/1042/7367/4581/files/Mercurius_S.png?v=1788921238', M: 'https://cdn.shopify.com/s/files/1/1042/7367/4581/files/Mercurius_M.png?v=1788921238', L: 'https://cdn.shopify.com/s/files/1/1042/7367/4581/files/Mercurius_L.png?v=1788921238', XL: 'https://cdn.shopify.com/s/files/1/1042/7367/4581/files/Mercurius_xl.png?v=1788921237' },
+  uranus:  { S: 'https://cdn.shopify.com/s/files/1/1042/7367/4581/files/Uranus_s.png?v=1788920762', M: 'https://cdn.shopify.com/s/files/1/1042/7367/4581/files/Uranus_M.png?v=1788920762', L: 'https://cdn.shopify.com/s/files/1/1042/7367/4581/files/Uranus_L.png?v=1788920762', XL: 'https://cdn.shopify.com/s/files/1/1042/7367/4581/files/Uranus_xl.png?v=1788920763' },
+  pluto:   { S: 'https://cdn.shopify.com/s/files/1/1042/7367/4581/files/Pluto_S_9c28d5a2-837f-4f54-bcef-e44780bef65a.png?v=1788921070', M: 'https://cdn.shopify.com/s/files/1/1042/7367/4581/files/Pluto_M.png?v=1788921070', L: 'https://cdn.shopify.com/s/files/1/1042/7367/4581/files/Pluto_L.png?v=1788921071', XL: 'https://cdn.shopify.com/s/files/1/1042/7367/4581/files/Pluto_XL.png?v=1788921070' },
+};
 const VENDOR = 'Cosmic Lands';
 const GENESIS_UNLOCK = 2036;
 const PLANET_NAME = {

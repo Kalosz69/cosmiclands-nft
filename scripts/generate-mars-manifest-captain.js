@@ -36,11 +36,14 @@ const IMG_BASE = 'https://cdn.shopify.com/s/files/1/1042/7367/4581/files/';
 //   (decyzja K 18.08: rezerwat 16 000 działek = 9 280 000 COSMO, patrz 12-KTO-USTALA-CENE §2/§4/§5).
 // 1 planeta (10k działek) = 4 872 000 COSMO teoretycznie (z zaokrągleń klas: ~4 868 000).
 // Pełny podział 58M: 12-KTO-USTALA-CENE-2026-08-18.md
+// OBRAZKI (09.09, K): nowe pliki Mars_{S,M,L,XL}.png z biblioteki Files (v=17889212xx) —
+//   zastąpiły stare mars-plot-*.jpg (v=1778230340). URL-e zweryfikowane HTTP 200. fix-images.mjs
+//   podmienia je na 8004 żywych produktach; tutaj zmiana dotyczy przyszłych generacji manifestu.
 const CLS_CFG = {
-  S:  { area:0.5,  price:50,  cosmo:80,   img:'mars-plot-s.jpg',  ver:'1778230340', step:1 },
-  M:  { area:1.5,  price:129, cosmo:240,  img:'mars-plot-m.jpg',  ver:'1778230340', step:2 },
-  L:  { area:4.5,  price:369, cosmo:720,  img:'mars-plot-l.jpg',  ver:'1778230340', step:3 },
-  XL: { area:13.5, price:999, cosmo:2160, img:'mars-plot-xl.jpg', ver:'1778230339', step:4 },
+  S:  { area:0.5,  price:50,  cosmo:80,   img:'Mars_S.png',   ver:'1788921275', step:1 },
+  M:  { area:1.5,  price:129, cosmo:240,  img:'Mars_M.png',   ver:'1788921275', step:2 },
+  L:  { area:4.5,  price:369, cosmo:720,  img:'Mars_L.png',   ver:'1788921276', step:3 },
+  XL: { area:13.5, price:999, cosmo:2160, img:'Mars_XL.png',  ver:'1788921275', step:4 },
 };
 // Genesis/Rezerwat: PEŁNE pakiety (K 18.08) — 2000 działek/planetę = 1 160 000 COSMO
 // (800×100 + 600×300 + 400×900 + 200×2700); 8 planet = 9 280 000.
