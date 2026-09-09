@@ -1,13 +1,19 @@
-// IMPORT LINII K — TEST 10 działek Mars (GO K 05.09: "najpierw na próbę 10 poprawnych działek")
-// 1:1 z linii K: generate-mars-manifest-captain.js (rekordy) + 04-worker-import-mars.js (upsertProduct 20.08 R1–R6).
-// Różnica WYŁĄCZNIE: manifest z /opt/data/scripts/mars-manifest.json (linia K), slice(0,10), brak Worker/KV (lokalnie).
-// Pacing: 5 równolegle / 500ms (jak w oryginale). Po imporcie: weryfikacja publishedAt (onlineStoreUrl).
+// IMPORT LINII K (Shopify CREATE) — import działek Marsa z manifestu do sklepu rzkhvb-m1.
+// KANON (od 04.09) importera linią K: generate-mars-manifest-captain.js (dane) → TEN skrypt.
+// 1:1 z workerem (upsertProduct 20.08): productSet + publishablePublish + productCreateMedia.
+// Stan 09.09: importuje pierwsze N działek z build/mars-8000-manifest.json (8004 Marsa:
+// 8000 komercyjnych R01–R13 + 4 przeniesione sold 008001–008004). Domyślnie N=8004;
+// argument pozycyjny nadpisuje (np. `node scripts/import-k-batch.mjs 10` = próba 10).
+// Lokalnie (bez Workera/KV). Pacing: 5 równolegle / 500 ms (jak oryginał). Raport:
+// build/import-k10-report.json (resumable: pomija już w raporcie? NIE — pełny batch za każdym razem).
+// Po imporcie weryfikacja publishedAt (onlineStoreUrl). UWAGA: skrypt PUBLIKUJE do Online Store
+// (publishablePublish → PUBLICATION_ID) — inaczej niż worker /import (decyzja 20.08: bez publikacji).
 import fs from 'node:fs';
 
 const SHOP = 'rzkhvb-m1.myshopify.com';
 const LOCATION_ID = 'gid://shopify/Location/118795174229';   // 17-indeks-sekretow
 const PUBLICATION_ID = 'gid://shopify/Publication/337157751125'; // 17-indeks-sekretow
-const N = parseInt(process.argv[2] || '10', 10);
+const N = parseInt(process.argv[2] || '8004', 10);
 
 const t = fs.readFileSync('/opt/data/.secrets/shop.txt','utf8');
 const CLIENT_ID = t.match(/\b[0-9a-f]{32}\b/)[0];
@@ -32,7 +38,7 @@ const gql = async (q, v={}) => {
   }
 };
 
-const manifest = JSON.parse(fs.readFileSync('/opt/data/scripts/mars-manifest.json','utf8'));
+const manifest = JSON.parse(fs.readFileSync('/opt/data/workspace/cosmiclands-nft/build/mars-8000-manifest.json','utf8'));
 const batch = manifest.slice(0, N);
 console.log(`import linią K: ${batch.length} działek (mars-manifest.json rekordy 1–${N})`);
 
