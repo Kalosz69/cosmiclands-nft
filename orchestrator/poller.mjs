@@ -141,10 +141,12 @@ async function resolveClass(item, orderId) {
 // Współrzędne działki są w KV (worker /api/map) — fetch per SKU, cache per run.
 async function plotCoords(sku) {
   try {
-    if (!plotCoords._cache) {
+    const now = Date.now();
+    if (!plotCoords._cache || !plotCoords._ts || now - plotCoords._ts > 60000) {
       const res = await fetch(cfg.worker_url || 'https://cosmiclands-sync.flufy69happy.workers.dev/api/map?light=1');
       const j = await res.json();
       plotCoords._cache = new Map((j.plots || []).map(p => [String(p.plot_id || '').toUpperCase(), [p.lat, p.lon]]));
+      plotCoords._ts = now;
     }
     const c = plotCoords._cache.get(String(sku || '').toUpperCase());
     if (!c || c[0] == null || c[1] == null) return '—';
