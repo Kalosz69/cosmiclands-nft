@@ -227,6 +227,9 @@ function runScript(script, env, args, label) {
 }
 
 // ── Evidence ────────────────────────────────────────────────────────────
+// FIX 2026-09-12: evidence per order+SKU (per-order powodował, że item 2+
+// dziedziczył mint_tx/pdf/msgId itemu 1 → cichy skip całego pipeline'u).
+// Klucz: "name@SKU". Fallback: bez SKU = stary per-order plik (kompatybilność).
 function evDir(orderId) { return path.join(EVIDENCE, String(orderId)); }
 function evPath(orderId, name) { return path.join(evDir(orderId), name); }
 function evRead(orderId, name) {
@@ -235,6 +238,18 @@ function evRead(orderId, name) {
 function evWrite(orderId, name, content) {
   mkdirSync(evDir(orderId), { recursive: true });
   writeFileSync(evPath(orderId, name), content);
+}
+// per-SKU: evReadItem("7878…", sku, "mint_tx", idx) → czyta "mint_tx@SKU.txt".
+// Fallback (stara forma sprzed fixa): per-order plik bez SKU — dotyczył pierwszego
+// itemu zamówienia (przy 1 itemie = całość). Przyjmowany TYLKO dla idx===0.
+function evReadItem(orderId, sku, name, idx) {
+  const v = evRead(orderId, `${name}@${sku}`);
+  if (v !== null) return v;
+  if (idx === 0) return evRead(orderId, name);
+  return null;
+}
+function evWriteItem(orderId, sku, name, content) {
+  evWrite(orderId, `${name}@${sku}`, content);
 }
 
 // ── Processing ──────────────────────────────────────────────────────────
@@ -262,7 +277,7 @@ async function processOrder(order, state) {
   const { address: wallet, mode } = resolveWallet(order);
   const to = cfg.mail_to;
 
-  for (const item of order.line_items) {
+  for (const [idx, item] of order.line_items.entries()) {
     const sku = item.sku;
     const { cls, region } = await resolveClass(item, orderId);
     const coordsStr = await plotCoords(sku);
@@ -275,9 +290,9 @@ async function processOrder(order, state) {
       continue;
     }
 
-    // [1] MINT (skip jeśli evidence ma tx) — mint-test.mjs: env PLOT, BUYER, TOKEN_URI opcjonalny
-    let mintTx = evRead(orderId, 'mint_tx.txt');
-    let tokenId = evRead(orderId, 'token_id.txt');
+    // [1] MINT (skip jeśli evidence ma tx DLA TEGO SKU) — mint-test.mjs: env PLOT, BUYER, TOKEN_URI opcjonalny
+    let mintTx = evReadItem(orderId, sku, 'mint_tx.txt', idx);
+    let tokenId = evReadItem(orderId, sku, 'token_id.txt', idx);
     if (!mintTx && !tokenId) {
       const pre = await existingMint(sku, wallet);
       if (pre?.exists && pre.owner === pre.want) {
@@ -286,8 +301,8 @@ async function processOrder(order, state) {
         const origTx = await findMintTx(pre.tokenId);
         tokenId = pre.tokenId;
         mintTx = origTx || `adopted:${pre.tokenId}`;
-        evWrite(orderId, 'token_id.txt', tokenId);
-        evWrite(orderId, 'mint_tx.txt', mintTx);
+        evWriteItem(orderId, sku, 'token_id.txt', tokenId);
+        evWriteItem(orderId, sku, 'mint_tx.txt', mintTx);
       } else if (pre?.exists && pre.owner === cfg.treasury_wallet.toLowerCase() && mode === 'DIRECT_WALLET') {
         // [B] Plot w banku (0xb66A), klient podał swój portfel → TRANSFER bank→klient (claim).
         // Bank podpisuje (seed = klucz 0xb66A, owner kontraktu Deed). Potem normalny łańcuch: grant+PDF+email bez noty bankowej.
@@ -301,13 +316,13 @@ async function processOrder(order, state) {
         if (!mT) throw new Error('Transfer: nie odczytano tx z stdout');
         tokenId = pre.tokenId;
         mintTx = mT[1];
-        evWrite(orderId, 'token_id.txt', tokenId);
-        evWrite(orderId, 'mint_tx.txt', mintTx);
+        evWriteItem(orderId, sku, 'token_id.txt', tokenId);
+        evWriteItem(orderId, sku, 'mint_tx.txt', mintTx);
         log('INFO', `TRANSFER OK ${sku} (${tokenId}) → ${wallet} tx=${mintTx}`);
       } else if (pre?.exists) {
         // [C] Double-sell: zmintowany poza bankiem/u innego — NIE mintuję, NIE grantuję; decyzja K.
         log('ERROR', `DOUBLE-SELL ${sku}: on-chain owner=${pre.owner}, zamówienie oczekiwało ${pre.want} — item pominięty (zero mintu/grantu); evidence double_sell.txt, decyzja K (transfer vs remint)`);
-        evWrite(orderId, 'double_sell.txt', JSON.stringify({ sku, onchain_owner: pre.owner, expected: pre.want, token_id: pre.tokenId }));
+        evWriteItem(orderId, sku, 'double_sell.txt', JSON.stringify({ sku, onchain_owner: pre.owner, expected: pre.want, token_id: pre.tokenId }));
         continue;
       }
     }
@@ -322,27 +337,27 @@ async function processOrder(order, state) {
       const m = out.match(/tx=(0x[0-9a-fA-F]{64})/);
       if (!m) throw new Error(`Mint: nie odczytano tx z stdout`);
       mintTx = m[1];
-      evWrite(orderId, 'mint_tx.txt', mintTx);
+      evWriteItem(orderId, sku, 'mint_tx.txt', mintTx);
       const t = out.match(/ownerOf\((\d+)\)/);
-      if (t) { tokenId = t[1]; evWrite(orderId, 'token_id.txt', tokenId); }
+      if (t) { tokenId = t[1]; evWriteItem(orderId, sku, 'token_id.txt', tokenId); }
       log('INFO', `MINT OK ${sku} → ${wallet} tx=${mintTx}${tokenId ? ` tokenId=${tokenId}` : ''}`);
       // UWAGA v1: mint-test.mjs mintuje na plot z PLOT env — ustawiamy poniżej przed uruchomieniem (patrz TODO v1.1)
     }
 
     // [2] GRANT COSMO
-    let cosmoTx = evRead(orderId, 'cosmo_tx.txt');
+    let cosmoTx = evReadItem(orderId, sku, 'cosmo_tx.txt', idx);
     if (!cosmoTx) {
       const out = withRetry(() => runScript('grant-cosmo.mjs', {},
         ['--to', wallet, '--amount', String(grant)], `grant ${grant} → ${wallet}`), 'grant');
       const m = out.match(/tx=(0x[0-9a-fA-F]{64})/);
       if (!m) throw new Error(`Grant: nie odczytano tx`);
       cosmoTx = m[1];
-      evWrite(orderId, 'cosmo_tx.txt', cosmoTx);
+      evWriteItem(orderId, sku, 'cosmo_tx.txt', cosmoTx);
       log('INFO', `GRANT OK ${grant} COSMO → ${wallet} tx=${cosmoTx}`);
     }
 
-    // [3] PDF premium v3 (skip jeśli evidence pdf)
-    let pdfPath = evRead(orderId, 'pdf_path.txt');
+    // [3] PDF premium v3 (skip jeśli evidence pdf DLA TEGO SKU)
+    let pdfPath = evReadItem(orderId, sku, 'pdf_path.txt', idx);
     if (!pdfPath || !existsSync(pdfPath)) {
       const outDir = path.join(ROOT, 'test-output');
       mkdirSync(outDir, { recursive: true });
@@ -354,12 +369,12 @@ async function processOrder(order, state) {
          '--price', cfg.class_meta[cls]?.price || '—', '--cosmo', String(grant),
          '--cert', `CL-TEST-${orderId}`, '--token-id', String(tokenId || '0'), '--tx', mintTx,
          '--out', pdfPath], `pdf ${sku}`), 'pdf');
-      evWrite(orderId, 'pdf_path.txt', pdfPath);
+      evWriteItem(orderId, sku, 'pdf_path.txt', pdfPath);
       log('INFO', `PDF OK ${pdfPath}`);
     }
 
     // [4] EMAIL
-    let msgId = evRead(orderId, 'email_msgid.txt');
+    let msgId = evReadItem(orderId, sku, 'email_msgid.txt', idx);
     if (!msgId && cfg.email_enabled === false) {
       log('WARN', `EMAIL SKIP (${sku}): email_enabled=false (np. blokada IP SMTP) — dokończy kolejny obieg`);
     } else if (!msgId) {
@@ -371,7 +386,7 @@ async function processOrder(order, state) {
       }, emailArgs, `email ${sku} → ${to}${mode === 'COSMIC_BANK' ? ' [+Cosmic Bank notice]' : ''}`), 'email');
       const m = out.match(/msgId\s+(\S+)/);
       msgId = m ? m[1] : 'unknown';
-      evWrite(orderId, 'email_msgid.txt', msgId);
+      evWriteItem(orderId, sku, 'email_msgid.txt', msgId);
       log('INFO', `EMAIL OK → ${to} msgId=${msgId}`);
     }
   }
