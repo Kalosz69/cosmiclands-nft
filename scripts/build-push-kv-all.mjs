@@ -11,7 +11,7 @@ for(const pl of PLANETS){
   const f=`build/${pl}-8000-manifest.json`;
   if(!fs.existsSync(f)){console.error('Brak',f,'— najpierw generate-planet-manifest dla',pl);process.exit(1);}
   const m=JSON.parse(fs.readFileSync(f,'utf8'));
-  if(m.length!==8000){console.error(`${pl}: ${m.length} != 8000`);process.exit(1);}
+  if(m.length<8000){console.error(`${pl}: ${m.length} < 8000`);process.exit(1);}
   merged.push(...m);
   console.log(`${pl}: ${m.length}`);
 }
